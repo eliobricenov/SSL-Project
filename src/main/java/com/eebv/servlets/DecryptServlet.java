@@ -23,7 +23,7 @@ import java.security.spec.InvalidKeySpecException;
 public class DecryptServlet extends HttpServlet {
 
     /**
-     * This endpoint receives a the private key used to decrypt and is the name of the file that'll be decrypted.
+     * This endpoint receives the name of the file that'll be decrypted and  the private key that'll be used to decrypt.
      * @param req servlet request
      * @param resp servlet response
      */
@@ -33,8 +33,8 @@ public class DecryptServlet extends HttpServlet {
         PrintWriter printWriter = resp.getWriter();
         JSONObject response = new JSONObject();
         try {
-            Part fileNamePart = req.getPart("name");
-            Part privateKeyPart = req.getPart("private");
+            Part fileNamePart = req.getPart("name"); //must be sent as "name" in the form-data
+            Part privateKeyPart = req.getPart("private"); //must be sent as "private" in the form-data
             //check if all the files were sent in the request
             if (fileNamePart != null && privateKeyPart != null ) {
                 //Get file name

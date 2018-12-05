@@ -20,7 +20,8 @@ import java.security.spec.InvalidKeySpecException;
 public class EncryptServlet extends HttpServlet {
 
     /**
-     * This endpoint receives two files in the request, one is the file that'll be encrypted and the other one is
+     * This endpoint receives two files in the request; the file that'll be encrypted and 
+     * the public key that'll be used to encrypt. Remember to use only .txt files.
      * the key used to encrypt.
      * @param req servlet request
      * @param resp servlet response
@@ -31,8 +32,8 @@ public class EncryptServlet extends HttpServlet {
         JSONObject response = new JSONObject();
         PrintWriter printWriter = resp.getWriter();
         try {
-            Part publicKeyPart = req.getPart("public");
-            Part secretPart = req.getPart("secret");
+            Part publicKeyPart = req.getPart("public"); //must be sent as "public" in the form-data.
+            Part secretPart = req.getPart("secret"); //this is the file, must be sent as "secret" in the form-data.
             //check if all the files were sent in the request
             if (publicKeyPart != null  && secretPart != null) {
                 PublicKey publicKey = KeysUtils.loadPublicKey(publicKeyPart);
